@@ -6,7 +6,7 @@ import os
 import time
 import urllib
 import urllib.parse
-from ssl import CertificateError
+import ssl
 
 import urwid
 import websockets
@@ -134,7 +134,7 @@ class WebsocketTestingClient(object):
             while True:
                 try:
                     # Await the connection to complete successfully
-                    websocket = yield from websockets.connect(**connection_args)
+                    websocket = yield from websockets.connect(**connection_args, ssl=ssl._create_unverified_context())
                     websocket.connection_time = time.time() - start_time
                     break
 
